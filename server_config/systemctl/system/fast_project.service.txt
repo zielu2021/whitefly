@@ -1,0 +1,15 @@
+[Unit]
+Description=Gunicorn instance to serve fast_project
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/var/www/fast_project
+Environment="PATH=/root/venv/bin"
+ExecStart=/root/venv/bin/gunicorn --workers 3 --bind unix:/var/www/fast_project/fast_project.sock -m 007 app:app -k uvicorn.workers.UvicornWorker
+#ExecStart=/root/venv/bin/gunicorn --workers 3 --bind 0.0.0.0:8001 --umask=0007 app:app -k uvicorn.workers.UvicornWorker
+
+
+[Install]
+WantedBy=multi-user.target

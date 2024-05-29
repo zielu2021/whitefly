@@ -1,0 +1,36 @@
+server {
+    listen 80;
+    #server_name 113.30.188.145;
+    server_name whiteflysz.mywire.org;
+
+
+    # flask_project (uwsgi) at /
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/var/www/flask_project/flask_project.sock;
+    }
+
+    # fast_project (asgi) at /api
+    #location /api {
+        #include /etc/nginx/proxy_params;
+        #proxy_pass http://unix:/var/www/fast_project/fast_project.sock;
+    #}
+    # fast_project (asgi) at /api
+    location /api/ {
+        include /etc/nginx/proxy_params;
+        proxy_pass http://localhost:8001;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    # flaskasgi_project (asgi) at /flaskasgi
+    location /flaskasgi {
+        include /etc/nginx/proxy_params;
+        proxy_pass http://unix:/var/www/flaskasgi_project/flaskasgi_project.sock;
+    }
+    location = /loaderio-f35808ff5ea1483192d9c9dcbd12718f.txt {
+        default_type text/plain;
+        return 200 'loaderio-f35808ff5ea1483192d9c9dcbd12718f';
+    }
+}
