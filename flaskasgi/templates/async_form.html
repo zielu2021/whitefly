@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Async Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $('#asyncForm').submit(function(event){
+            event.preventDefault();  
+            var formData = {
+                'data': $('input[name=data]').val()
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/flaskasgi/async-form',
+                data: JSON.stringify(formData),
+                contentType: 'application/json;charset=UTF-8',
+                success: function(response) {
+                    alert(response.message);  
+                    $('input[name=data]').val(''); 
+                },
+                error: function(error) {
+                    alert('Error: ' + error);
+                }
+            });
+        });
+    });
+    </script>
+</head>
+<body>
+    <form id="asyncForm">
+        Enter your data asynchronously: <input type="text" name="data">
+        <input type="submit" value="Submit Asynchronously">
+    </form>
+    <hr/>
+    <a href="/flaskasgi">Back to index </a>
+</body>
+</html>
