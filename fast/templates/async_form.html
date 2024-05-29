@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Data</title>
+</head>
+<body>
+    <h1>Submit Data Form</h1>
+    <form id="dataForm">
+        <label for="field_data">Data:</label>
+        <input type="text" id="field_data" name="field_data" required>
+        <button type="submit">Submit</button>
+    </form>
+    <hr/>
+<a href="/api">Back to index api</a>
+
+    <div id="response"></div>
+
+    <script>
+        const form = document.getElementById('dataForm');
+
+        form.onsubmit = async function(event) {
+            event.preventDefault();
+            const formData = new FormData(form); 
+            const response = await fetch('/api/async-submit/', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById('response').innerText = result.success || result.error;
+
+            if (response.ok) {  
+                form.reset();  
+            }
+        }
+    </script>
+</body>
+</html>
+
+<!--below codeto display record from db-->
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Data</title>
+</head>
+<body>
+    <h1>Submit Data Form</h1>
+    <form id="dataForm">
+        <label for="field_data">Data:</label>
+        <input type="text" id="field_data" name="field_data" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="response"></div>
+    <div id="lastRecord"></div>
+
+    <script>
+        const form = document.getElementById('dataForm');
+        form.onsubmit = async function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('/async-submit/', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+
+            // Display feedback
+            const responseElement = document.getElementById('response');
+            responseElement.innerText = result.success || result.error;
+
+            // Display the last record if available
+            if (result.data) {
+                const lastRecordElement = document.getElementById('lastRecord');
+                lastRecordElement.innerText = `Last Record: ${result.data}`;
+            }
+
+            if (response.ok) { 
+                form.reset();  // Reset the form fields
+            }
+        }
+    </script>
+</body>
+</html>
+-->
