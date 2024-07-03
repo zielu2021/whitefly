@@ -11,3 +11,6 @@ This project aims to evaluate the efficiency of various combinations of web fram
 Through this testing, we aim to gain insights into the performance characteristics of each combination under different scenarios, enabling informed decisions in selecting the most suitable stack for specific use cases.
 
 For more details on the setup and results, please refer to the accompanying documentation or contact the project maintainers.
+
+Results of tests
+![Results of tests](https://github.com/zielu2021/whitefly/blob/main/IMG_5582.jpg?raw=true)
